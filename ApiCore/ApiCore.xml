@@ -1,0 +1,600 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ApiCore</name>
+    </assembly>
+    <members>
+        <member name="T:ApiCore.Controllers.Acme.ActivityController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Controllers.Acme.ActivityController.#ctor(ApiCore.Interfaces.Acme.IActivityService,ApiCore.Interfaces.Acme.IRegistrationService)">
+            <summary>
+            
+            </summary>
+            <param name="activityService"></param>
+            <param name="registrationService"></param>
+        </member>
+        <member name="M:ApiCore.Controllers.Acme.ActivityController.GetActivities(System.String,System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Returns a list created.
+            </summary>
+            <param name="search">Text to search</param>
+            <param name="sort">Parameter to sort </param>
+            <param name="order">ASC or DESC</param>
+            <param name="limit">Number of rows to return</param>
+            <param name="offset">Starting position/offset in table</param>
+            <returns></returns>
+            
+        </member>
+        <member name="M:ApiCore.Controllers.Acme.ActivityController.GetRegistrations(System.String,System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Returns a list created.
+            </summary>
+            <param name="search">Text to search</param>
+            <param name="sort">Parameter to sort </param>
+            <param name="order">ASC or DESC</param>
+            <param name="limit">Number of rows to return</param>
+            <param name="offset">Starting position/offset in table</param>
+            <returns></returns>
+            
+        </member>
+        <member name="T:ApiCore.Controllers.Acme.RegistrationController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Controllers.Acme.RegistrationController.#ctor(ApiCore.Interfaces.Acme.IRegistrationService,ApiCore.Interfaces.Acme.IUserService)">
+            <summary>
+            
+            </summary>
+            <param name="registrationService"></param>
+            <param name="userService"></param>
+        </member>
+        <member name="M:ApiCore.Controllers.Acme.RegistrationController.GetRegistrations(System.String,System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Returns a list created.
+            </summary>
+            <param name="search">Text to search</param>
+            <param name="sort">Parameter to sort </param>
+            <param name="order">ASC or DESC</param>
+            <param name="limit">Number of rows to return</param>
+            <param name="offset">Starting position/offset in table</param>
+            <returns></returns>
+            
+        </member>
+        <member name="M:ApiCore.Controllers.Acme.RegistrationController.GetRegistrationsByActivityId(System.Guid,System.String,System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Returns a list created.
+            </summary>
+            <param name="activityId"></param>
+            <param name="search">Text to search</param>
+            <param name="sort">Parameter to sort </param>
+            <param name="order">ASC or DESC</param>
+            <param name="limit">Number of rows to return</param>
+            <param name="offset">Starting position/offset in table</param>
+            <returns></returns>
+            
+        </member>
+        <member name="M:ApiCore.Controllers.Acme.RegistrationController.GetUsers(System.String,System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="search"></param>
+            <param name="sort"></param>
+            <param name="order"></param>
+            <param name="limit"></param>
+            <param name="offset"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ApiCore.Controllers.JokeGenerator.JokeGeneratorController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Controllers.JokeGenerator.JokeGeneratorController.#ctor(ApiCore.Interfaces.JokeGenerator.IJokesFeed,ApiCore.Interfaces.JokeGenerator.INamesFeed)">
+            <summary>
+            
+            </summary>
+            <param name="jokesService"></param>
+            <param name="namesService"></param>
+        </member>
+        <member name="M:ApiCore.Controllers.JokeGenerator.JokeGeneratorController.GetCategories">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ApiCore.Controllers.JokeGenerator.JokeGeneratorController.GetNames">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ApiCore.Controllers.JokeGenerator.JokeGeneratorController.GetRandomJoke(System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="firstName"></param>
+            <param name="lastName"></param>
+            <param name="randomName"></param>
+            <param name="category"></param>
+            <returns>If Random Name = false then you must input first and last name</returns>
+        </member>
+        <member name="T:ApiCore.Controllers.NineLetterController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Controllers.NineLetterController.#ctor(Microsoft.Extensions.Options.IOptions{NineLetter.Web.Models.NineLetterConfig},Microsoft.Extensions.FileProviders.IFileProvider,Microsoft.Extensions.Caching.Memory.IMemoryCache,ApiCore.Interfaces.NineLetter.INineLetterService)">
+            <summary>
+            
+            </summary>
+            <param name="optionsAccessor"></param>
+            <param name="fileProvider"></param>
+            <param name="memoryCache"></param>
+        </member>
+        <member name="M:ApiCore.Controllers.NineLetterController.PatternList">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ApiCore.Controllers.NineLetterController.Patterns">
+            <summary>
+            Returns all available patterns
+            </summary>
+        </member>
+        <member name="M:ApiCore.Controllers.NineLetterController.Validate(System.String)">
+            <summary>
+            Validates a pattern.
+            </summary>
+            <param name="patternInput"></param>
+        </member>
+        <member name="T:ApiCore.Data.ApplicationDbContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Data.ApplicationDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{ApiCore.Data.ApplicationDbContext})">
+            <summary>
+            
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="M:ApiCore.Data.ApplicationDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="P:ApiCore.Data.ApplicationDbContext.Activity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ApiCore.Data.ApplicationDbContext.Registration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ApiCore.Data.ApplicationDbContext.User">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ApiCore.DTO.EntityBase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.DTO.EntityBase.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ApiCore.DTO.EntityBase.CreatedUtc">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ApiCore.DTO.EntityBase.ModifiedUtc">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ApiCore.DTO.EntityBase.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ApiCore.Interfaces.Acme.IActivityService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Interfaces.Acme.IActivityService.GetActivitiesAsync(System.String,System.Int32@,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="search"></param>
+            <param name="sort"></param>
+            <param name="order"></param>
+            <param name="total"></param>
+            <param name="limit"></param>
+            <param name="offset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiCore.Interfaces.Acme.IActivityService.GetActivitiesAsync(System.Int32@,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="total"></param>
+            <param name="limit"></param>
+            <param name="offset"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ApiCore.Interfaces.Acme.IRegistrationService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Interfaces.Acme.IRegistrationService.GetRegistrationsAsync(System.String,System.Int32@,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="search"></param>
+            <param name="sort"></param>
+            <param name="order"></param>
+            <param name="total"></param>
+            <param name="limit"></param>
+            <param name="offset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiCore.Interfaces.Acme.IRegistrationService.GetRegistrationsAsync(System.Int32@,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="total"></param>
+            <param name="limit"></param>
+            <param name="offset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiCore.Interfaces.Acme.IRegistrationService.AddRegistration(ApiCore.DTO.Acme.Registration,System.Int32@)">
+            <summary>
+            
+            </summary>
+            <param name="registration"></param>
+            <param name="result"></param>
+        </member>
+        <member name="M:ApiCore.Interfaces.Acme.IRegistrationService.EditRegistration(ApiCore.DTO.Acme.Registration,System.Int32@)">
+            <summary>
+            
+            </summary>
+            <param name="registration"></param>
+            <param name="result"></param>
+        </member>
+        <member name="T:ApiCore.Interfaces.Acme.IUserService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Interfaces.Acme.IUserService.GetUsersAsync(System.String,System.Int32@,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="search"></param>
+            <param name="sort"></param>
+            <param name="order"></param>
+            <param name="total"></param>
+            <param name="limit"></param>
+            <param name="offset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiCore.Interfaces.Acme.IUserService.GetUsersAsync(System.Int32@,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="total"></param>
+            <param name="limit"></param>
+            <param name="offset"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ApiCore.Interfaces.ICountryService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Interfaces.ICountryService.CountrySelectList(ApiCore.Services.CountryValueType)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ApiCore.Interfaces.JokeGenerator.IJokesFeed">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Interfaces.JokeGenerator.IJokesFeed.GetRandomJoke(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="firstName"></param>
+            <param name="lastName"></param>
+            <param name="category"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiCore.Interfaces.JokeGenerator.IJokesFeed.GetCategories">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ApiCore.Interfaces.JokeGenerator.INamesFeed">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Interfaces.JokeGenerator.INamesFeed.GetName">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ApiCore.Interfaces.NineLetter.INineLetterService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Interfaces.NineLetter.INineLetterService.GetPatterns(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="number"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiCore.Interfaces.NineLetter.INineLetterService.ProcessTextFile(System.String,System.String,System.Int32,System.Boolean,System.Char)">
+            <summary>
+            
+            </summary>
+            <param name="fileLocation"></param>
+            <param name="pattern"></param>
+            <param name="ignoreLessThan"></param>
+            <param name="ignoreProperNouns"></param>
+            <param name="midChar"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ApiCore.Models.JokeGenerator.NameResult">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ApiCore.Models.JokeGenerator.NameResult.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ApiCore.Models.JokeGenerator.NameResult.Surname">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ApiCore.Models.JsonPagedResult`1">
+            <summary>
+            A generic object that reurns Json mainly used for paging with bootstrap tables
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:ApiCore.Models.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Services.Acme.ActivityService.GetActivitiesAsync(System.String,System.Int32@,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Activity Search including paging
+            </summary>
+            <param name="search">gives the text to search into database</param>
+            <param name="sort">gives you the column name of the table to sort</param>
+            <param name="order">specifies the order i.e, ASC or DESC</param>
+            <param name="total">Total number of records</param>
+            <param name="limit">specifies number of rows</param>
+            <param name="offset">starting position / offset in table</param>
+            <returns>List of Activitys</returns>
+        </member>
+        <member name="M:ApiCore.Services.Acme.ActivityService.GetActivitiesAsync(System.Int32@,System.Int32,System.Int32)">
+            <summary>
+            Activity Search including paging
+            </summary>
+            <param name="total">Total number of records</param>
+            <param name="limit">specifies number of rows</param>
+            <param name="offset">starting position / offset in table</param>
+            <returns>List of Activitys</returns>
+        </member>
+        <member name="M:ApiCore.Services.Acme.ActivityService.AddActivity(ApiCore.DTO.Acme.Activity,System.Int32@)">
+            <returns></returns>
+        </member>
+        <member name="M:ApiCore.Services.Acme.ActivityService.EditActivity(ApiCore.DTO.Acme.Activity,System.Int32@)">
+            <returns></returns>
+        </member>
+        <member name="T:ApiCore.Services.Acme.RegistrationService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Services.Acme.RegistrationService.#ctor(ApiCore.Data.ApplicationDbContext,Microsoft.Extensions.Logging.ILogger{ApiCore.Services.Acme.ActivityService})">
+            <param name="dataContext"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:ApiCore.Services.Acme.RegistrationService.GetRegistrationsAsync(System.String,System.Int32@,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            Search including paging
+            </summary>
+            <param name="search">gives the text to search into database</param>
+            <param name="sort">gives you the column name of the table to sort</param>
+            <param name="registration">specifies the registration i.e, ASC or DESC</param>
+            <param name="total">Total number of records</param>
+            <param name="limit">specifies number of rows</param>
+            <param name="offset">starting position / offset in table</param>
+            <returns>List</returns>
+        </member>
+        <member name="M:ApiCore.Services.Acme.RegistrationService.GetRegistrationsAsync(System.Int32@,System.Int32,System.Int32)">
+            <summary>
+            Search including paging
+            </summary>
+            <param name="total">Total number of records</param>
+            <param name="limit">specifies number of rows</param>
+            <param name="offset">starting position / offset in table</param>
+            <returns>List</returns>
+        </member>
+        <member name="M:ApiCore.Services.Acme.RegistrationService.GetRegistrationsByActivityIdAsync(System.Int32@,System.Guid,System.Int32,System.Int32)">
+            <summary>
+            Search including paging
+            </summary>
+            <param name="total">Total number of records</param>
+            <param name="activityId"></param>
+            <param name="limit">specifies number of rows</param>
+            <param name="offset">starting position / offset in table</param>
+            <returns>List</returns>
+        </member>
+        <member name="M:ApiCore.Services.Acme.RegistrationService.AddRegistration(ApiCore.DTO.Acme.Registration,System.Int32@)">
+            <returns></returns>
+        </member>
+        <member name="M:ApiCore.Services.Acme.RegistrationService.EditRegistration(ApiCore.DTO.Acme.Registration,System.Int32@)">
+            <returns></returns>
+        </member>
+        <member name="T:ApiCore.Services.Acme.UserService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Services.Acme.UserService.#ctor(ApiCore.Data.ApplicationDbContext)">
+            <summary>
+            
+            </summary>
+            <param name="dataContext"></param>
+        </member>
+        <member name="M:ApiCore.Services.Acme.UserService.GetUsersAsync(System.String,System.Int32@,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            User Search including paging
+            </summary>
+            <param name="search">gives the text to search into database</param>
+            <param name="sort">gives you the column name of the table to sort</param>
+            <param name="order">specifies the order i.e, ASC or DESC</param>
+            <param name="total">Total number of records</param>
+            <param name="limit">specifies number of rows</param>
+            <param name="offset">starting position / offset in table</param>
+            <returns>List of Users</returns>
+        </member>
+        <member name="M:ApiCore.Services.Acme.UserService.GetUsersAsync(System.Int32@,System.Int32,System.Int32)">
+            <summary>
+            User Search including paging
+            </summary>
+            <param name="total">Total number of records</param>
+            <param name="limit">specifies number of rows</param>
+            <param name="offset">starting position / offset in table</param>
+            <returns>List of Users</returns>
+        </member>
+        <member name="T:ApiCore.Services.CountryService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Services.CountryService.CountrySelectList(ApiCore.Services.CountryValueType)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ApiCore.Services.JokeGenerator.JokesFeed">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Services.JokeGenerator.JokesFeed.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="endpoint"></param>
+        </member>
+        <member name="M:ApiCore.Services.JokeGenerator.JokesFeed.GetRandomJoke(System.String,System.String,System.String)">
+            <inheritdoc />
+            <param name="firstName"></param>
+            <param name="lastName"></param>
+            <param name="category"></param>
+            <returns>Joke string</returns>
+        </member>
+        <member name="M:ApiCore.Services.JokeGenerator.JokesFeed.GetCategories">
+            <inheritdoc />
+            <summary>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ApiCore.Services.JokeGenerator.NamesFeed">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Services.JokeGenerator.NamesFeed.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Services.JokeGenerator.NamesFeed.GetName">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ApiCore.Services.NineLetterService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Services.NineLetterService.GetPatterns(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="number"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiCore.Services.NineLetterService.ProcessTextFile(System.String,System.String,System.Int32,System.Boolean,System.Char)">
+            <summary>
+            
+            </summary>
+            <param name="fileLocation"></param>
+            <param name="pattern"></param>
+            <param name="ignoreLessThan"></param>
+            <param name="ignoreProperNouns"></param>
+            <param name="midChar"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ApiCore.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+            <param name="env"></param>
+        </member>
+        <member name="P:ApiCore.Startup.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ApiCore.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
+    </members>
+</doc>
