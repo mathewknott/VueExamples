@@ -1,6 +1,6 @@
 # Vue.Js with API
 
-This is a test site to experiment on working with Vue.JS using an API running on .NET Core as a datasource. It's purley experiemental. 
+This is a test site to experiment on working with Vue.JS using an API running on .NET Core as a datasource. It's purley experimental. 
 
 # APICore Project
 
