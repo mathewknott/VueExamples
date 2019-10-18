@@ -14,7 +14,7 @@ namespace ApiCore.Controllers.Acme
     [Route("api/acme/[controller]")]
     //[Authorize]
     [ApiController]
-    public class RegistrationController : Controller
+    public class RegistrationController : ControllerBase
     {
         private readonly IRegistrationService _registrationService;
         private readonly IUserService _userService;
@@ -46,17 +46,15 @@ namespace ApiCore.Controllers.Acme
         /// <returns></returns>
         /// 
         [HttpGet("/api/acme/Registration/GetRegistrations", Name = "Registration_List")]
-        public async Task<IActionResult> GetRegistrations(string search, string sort, string order, int limit = 200, int offset = 0)
+        public async Task<ActionResult<JsonPagedResult<IEnumerable<Registration>>>> GetRegistrations(string search, string sort, string order, int limit = 200, int offset = 0)
         {
             var registrations = await _registrationService.GetRegistrationsAsync(sort, out int total, order, limit, offset, search);
 
-            var result = new JsonPagedResult<IEnumerable<Registration>>
+            return new JsonPagedResult<IEnumerable<Registration>>
             {
                 Total = total,
                 Rows = registrations
             };
-
-            return Json(result);
         }
 
         /// <summary>
@@ -71,17 +69,15 @@ namespace ApiCore.Controllers.Acme
         /// <returns></returns>
         /// 
         [HttpGet("/api/acme/Registration/GetRegistrationsByActivityId", Name = "Registration_List_By_ActivityId")]
-        public async Task<IActionResult> GetRegistrationsByActivityId(Guid activityId, string search, string sort, string order, int limit = 200, int offset = 0)
+        public async Task<ActionResult<JsonPagedResult<IEnumerable<Registration>>>> GetRegistrationsByActivityId(Guid activityId, string search, string sort, string order, int limit = 200, int offset = 0)
         {
             var registrations = await _registrationService.GetRegistrationsByActivityIdAsync(out var total, activityId, limit, offset);
 
-            var result = new JsonPagedResult<IEnumerable<Registration>>
+            return new JsonPagedResult<IEnumerable<Registration>>
             {
                 Total = total,
                 Rows = registrations
             };
-
-            return Json(result);
         }
 
         /// <summary>
@@ -94,17 +90,15 @@ namespace ApiCore.Controllers.Acme
         /// <param name="offset"></param>
         /// <returns></returns>
         [HttpGet("/api/acme/Registration/GetUsers", Name = "Users_List")]
-        public async Task<IActionResult> GetUsers(string search, string sort, string order, int limit = 200, int offset = 0)
+        public async Task<ActionResult<JsonPagedResult<IEnumerable<User>>>> GetUsers(string search, string sort, string order, int limit = 200, int offset = 0)
         {
-            var users = await _userService.GetUsersAsync(sort, out int total, order, limit, offset, search);
+            var users = await _userService.GetUsersAsync(sort, out var total, order, limit, offset, search);
 
-            var result = new JsonPagedResult<IEnumerable<User>>
+            return new JsonPagedResult<IEnumerable<User>>
             {
                 Total = total,
                 Rows = users
             };
-
-            return Json(result);
         }
         
         #endregion

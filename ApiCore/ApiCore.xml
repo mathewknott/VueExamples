@@ -122,31 +122,24 @@
             <param name="category"></param>
             <returns>If Random Name = false then you must input first and last name</returns>
         </member>
-        <member name="T:ApiCore.Controllers.NineLetterController">
+        <member name="T:ApiCore.Controllers.Nineletter.NineLetterController">
             <summary>
             
             </summary>
         </member>
-        <member name="M:ApiCore.Controllers.NineLetterController.#ctor(Microsoft.Extensions.Options.IOptions{NineLetter.Web.Models.NineLetterConfig},Microsoft.Extensions.FileProviders.IFileProvider,Microsoft.Extensions.Caching.Memory.IMemoryCache,ApiCore.Interfaces.NineLetter.INineLetterService)">
+        <member name="M:ApiCore.Controllers.Nineletter.NineLetterController.#ctor(ApiCore.Interfaces.NineLetter.INineLetterService)">
             <summary>
             
             </summary>
-            <param name="optionsAccessor"></param>
-            <param name="fileProvider"></param>
-            <param name="memoryCache"></param>
+            <param name="nineLetterService"></param>
         </member>
-        <member name="M:ApiCore.Controllers.NineLetterController.PatternList">
+        <member name="M:ApiCore.Controllers.Nineletter.NineLetterController.PatternList">
             <summary>
             
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ApiCore.Controllers.NineLetterController.Patterns">
-            <summary>
-            Returns all available patterns
-            </summary>
-        </member>
-        <member name="M:ApiCore.Controllers.NineLetterController.Validate(System.String)">
+        <member name="M:ApiCore.Controllers.Nineletter.NineLetterController.Validate(System.String)">
             <summary>
             Validates a pattern.
             </summary>
@@ -349,22 +342,10 @@
             
             </summary>
         </member>
-        <member name="M:ApiCore.Interfaces.NineLetter.INineLetterService.GetPatterns(System.Int32)">
+        <member name="M:ApiCore.Interfaces.NineLetter.INineLetterService.GetPatternResult">
             <summary>
             
             </summary>
-            <param name="number"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ApiCore.Interfaces.NineLetter.INineLetterService.ProcessTextFile(System.String,System.String,System.Int32,System.Boolean,System.Char)">
-            <summary>
-            
-            </summary>
-            <param name="fileLocation"></param>
-            <param name="pattern"></param>
-            <param name="ignoreLessThan"></param>
-            <param name="ignoreProperNouns"></param>
-            <param name="midChar"></param>
             <returns></returns>
         </member>
         <member name="T:ApiCore.Models.JokeGenerator.NameResult">
@@ -555,11 +536,18 @@
             
             </summary>
         </member>
-        <member name="M:ApiCore.Services.NineLetterService.GetPatterns(System.Int32)">
+        <member name="M:ApiCore.Services.NineLetterService.#ctor(Microsoft.Extensions.Options.IOptions{NineLetter.Web.Models.NineLetterConfig},Microsoft.Extensions.FileProviders.IFileProvider,Microsoft.Extensions.Caching.Memory.IMemoryCache)">
             <summary>
             
             </summary>
-            <param name="number"></param>
+            <param name="optionsAccessor"></param>
+            <param name="fileProvider"></param>
+            <param name="memoryCache"></param>
+        </member>
+        <member name="M:ApiCore.Services.NineLetterService.GetPatternResult">
+            <summary>
+            
+            </summary>
             <returns></returns>
         </member>
         <member name="M:ApiCore.Services.NineLetterService.ProcessTextFile(System.String,System.String,System.Int32,System.Boolean,System.Char)">
@@ -571,6 +559,12 @@
             <param name="ignoreLessThan"></param>
             <param name="ignoreProperNouns"></param>
             <param name="midChar"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiCore.Services.NineLetterService.GetPatterns(System.Int32)">
+            <summary>
+            </summary>
+            <param name="number"></param>
             <returns></returns>
         </member>
         <member name="T:ApiCore.Startup">

@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
 using ApiCore.Interfaces.NineLetter;
 using NineLetter.Web.Models.NineLetter;
+using NineLetter.Web.Models;
 
 namespace ApiCore.Services
 {
@@ -13,50 +18,71 @@ namespace ApiCore.Services
     /// </summary>
     public class NineLetterService : INineLetterService
     {
-        private readonly Random _rnd = new Random();
+        private readonly IOptions<NineLetterConfig> _optionsAccessor;
+        private readonly IFileProvider _fileProvider;
+        private readonly IMemoryCache _memoryCache;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="number"></param>
-        /// <returns></returns>
-        public IEnumerable<PatternResult> GetPatterns(int number)
+        /// <param name="optionsAccessor"></param>
+        /// <param name="fileProvider"></param>
+        /// <param name="memoryCache"></param>
+        public NineLetterService(IOptions<NineLetterConfig> optionsAccessor, IFileProvider fileProvider, IMemoryCache memoryCache)
         {
-            var list = new List<PatternResult>();
-
-            for (var i = 0; i < number; i++)
+            _optionsAccessor = optionsAccessor;
+            _fileProvider = fileProvider;
+            _memoryCache = memoryCache;
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Result>> GetPatternResult()
+        {
+            if (_memoryCache.TryGetValue("Patterns", out IEnumerable<Result> _))
             {
-                list.Add(new PatternResult { Pattern = GeneratePattern() });
+                return (IEnumerable<Result>)_memoryCache.Get("Patterns");
             }
 
-            return list;
-        }
+            var r = new List<Result>();
 
-        private string GeneratePattern()
-        {
-            var sb = new StringBuilder();
-            sb.Append(RandomVowels(_rnd, 1));
-            sb.Append(RandomConsonants(_rnd, 1));
-            sb.Append(RandomConsonants(_rnd, 1));
-            sb.Append(RandomConsonants(_rnd, 1));
-            sb.Append(RandomConsonants(_rnd, 1));
-            sb.Append(RandomConsonants(_rnd, 1));
-            sb.Append(RandomVowels(_rnd, 1));
-            sb.Append(RandomConsonants(_rnd, 1));
-            sb.Append(RandomConsonants(_rnd, 1));
-            return sb.ToString();
-        }
+            var patternList = await GetPatterns(_optionsAccessor.Value.PatternsToGenerate);
 
-        private char[] RandomConsonants(Random random, int length)
-        {
-            const string chars = "BCDFGHJKLMNPQRSTVWXYZ";
-            return Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray();
-        }
+            foreach (var pattern in patternList)
+            {
+                var wordResults = ProcessTextFile(
+                    _fileProvider.GetFileInfo(_optionsAccessor.Value.FileLocation).PhysicalPath,
+                    pattern, _optionsAccessor.Value.MinLettersLength,
+                    _optionsAccessor.Value.IgnoreProperNouns,
+                    pattern[4])?.ToList();
 
-        private char[] RandomVowels(Random random, int length)
-        {
-            const string chars = "AEIOU";
-            return Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray();
+                if (wordResults != null && wordResults.Any())
+                {
+                    var results = new Result
+                    {
+                        Pattern = pattern,
+                        Words = wordResults,
+                        PossibleWords = wordResults.Count,
+                        LongestWord = wordResults.Last()
+                    };
+
+                    r.Add(results);
+                }
+            }
+
+            var l = r.OrderByDescending(p => p.PossibleWords).ToList();
+
+            // keep item in cache as long as it is requested at least
+            // once every 5 minutes...
+            // but in any case make sure to refresh it every hour
+
+            // store in the cache
+            _memoryCache.Set("Patterns", l, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(5))
+                .SetAbsoluteExpiration(TimeSpan.FromHours(1)));
+
+            return l;
         }
 
         /// <summary>
@@ -68,7 +94,7 @@ namespace ApiCore.Services
         /// <param name="ignoreProperNouns"></param>
         /// <param name="midChar"></param>
         /// <returns></returns>
-        public IEnumerable<string> ProcessTextFile(string fileLocation, string pattern, int ignoreLessThan, bool ignoreProperNouns, char midChar)
+        private IEnumerable<string> ProcessTextFile(string fileLocation, string pattern, int ignoreLessThan, bool ignoreProperNouns, char midChar)
         {
             var result = new List<string>();
 
@@ -99,33 +125,72 @@ namespace ApiCore.Services
                 }
             }
 
-            return SortByLength(result);
-
+            return from s in result
+                orderby s.Length
+                select s;
         }
 
-        private static IEnumerable<string> SortByLength(IEnumerable<string> e)
+        private readonly Random _rnd = new Random();
+
+        /// <summary>
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        private async Task<IEnumerable<string>> GetPatterns(int number)
         {
-            var sorted = from s in e
-                orderby s.Length ascending
-                select s;
-            return sorted;
+            var list = new List<string>();
+
+            for (var i = 0; i < number; i++)
+            {
+                list.Add(GeneratePattern());
+            }
+
+            return await Task.FromResult(list);
+        }
+
+        private string GeneratePattern()
+        {
+            var sb = new StringBuilder();
+            sb.Append(RandomVowels(_rnd, 1));
+            sb.Append(RandomConsonants(_rnd, 1));
+            sb.Append(RandomConsonants(_rnd, 1));
+            sb.Append(RandomConsonants(_rnd, 1));
+            sb.Append(RandomConsonants(_rnd, 1));
+            sb.Append(RandomConsonants(_rnd, 1));
+            sb.Append(RandomVowels(_rnd, 1));
+            sb.Append(RandomConsonants(_rnd, 1));
+            sb.Append(RandomConsonants(_rnd, 1));
+            return sb.ToString();
+        }
+
+        private static char[] RandomConsonants(Random random, int length)
+        {
+            const string chars = "BCDFGHJKLMNPQRSTVWXYZ";
+            return Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray();
+        }
+
+        private static char[] RandomVowels(Random random, int length)
+        {
+            const string chars = "AEIOU";
+            return Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray();
         }
         
-        private bool IsResult(string s1, string s2)
+        private static bool IsResult(string word1, string word2)
         {
-            var oLength = s1.Length;
+            var oLength = word1.Length;
 
-            if (string.IsNullOrEmpty(s1) || string.IsNullOrEmpty(s2))
+            if (string.IsNullOrEmpty(word1) || string.IsNullOrEmpty(word2))
             {
                 return false;
             }
 
-            foreach (var c in s2)
+            foreach (var character in word2)
             {
-                var ix = s1.IndexOf(c);
+                var ix = word1.IndexOf(character);
+
                 if (ix >= 0)
                 {
-                    s1 = s1.Remove(ix, 1);
+                    word1 = word1.Remove(ix, 1);
                 }
                 else
                 {
@@ -133,7 +198,7 @@ namespace ApiCore.Services
                 }
             }
 
-            return oLength == s1.Length + s2.Length;
+            return oLength == word1.Length + word2.Length;
         }
     }
 }
